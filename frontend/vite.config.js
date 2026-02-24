@@ -5,5 +5,6 @@ import cesium from 'vite-plugin-cesium'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), cesium()],
-  base: '/OrbitGuard/', // Required for GitHub Pages deployment
+  // Remove base path to use relative paths for assets inside index.html for gh-pages
+  base: './',
 })
