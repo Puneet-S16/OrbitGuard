@@ -22,14 +22,27 @@ export default function GlobeViewer({ orbitData }) {
                 requestRenderMode: true,
                 maximumRenderTimeChange: Infinity,
                 terrainProvider: new Cesium.EllipsoidTerrainProvider(),
+                // Performance optimizations
+                skyBox: false,
+                skyAtmosphere: false,
+                imageryProvider: false,
             });
 
             const viewer = viewerRef.current;
+            const scene = viewer.scene;
 
-            viewer.scene.globe.enableLighting = false;
-            viewer.scene.skyAtmosphere.show = false;
+            // Extreme Performance Mode flags
+            scene.globe.enableLighting = false;
+            scene.globe.showWaterEffect = false;
+            scene.globe.depthTestAgainstTerrain = false;
+            scene.highDynamicRange = false;
+            scene.postProcessStages.fxaa.enabled = false;
             viewer.shadows = false;
-            viewer.resolutionScale = 0.7;
+            viewer.resolutionScale = 0.5;
+            viewer.clock.shouldAnimate = false;
+
+            // Single color globe material to avoid high-res texture loading
+            scene.globe.baseColor = Cesium.Color.fromCssColorString('#02040a');
         }
 
         const viewer = viewerRef.current;
