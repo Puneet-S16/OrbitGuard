@@ -10,8 +10,8 @@ function App() {
     const [error, setError] = useState(null)
     const [orbitData, setOrbitData] = useState({})
 
-    // Read backend URL from environment variables, fallback to localhost for development
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    // Read backend URL from environment variables, fallback to live Render URL for production
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://orbitguard-backend.onrender.com';
 
     const handlePredict = async (id1, id2) => {
         setLoading(true)
