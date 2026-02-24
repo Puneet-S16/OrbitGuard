@@ -6,9 +6,7 @@ export default function GlobeViewer({ orbitData }) {
     const viewerRef = useRef(null);
 
     useEffect(() => {
-        // Initialize viewer
         if (!viewerRef.current && cesiumContainer.current) {
-            // Must set access token if needed, or use default
             viewerRef.current = new Cesium.Viewer(cesiumContainer.current, {
                 animation: false,
                 timeline: false,
@@ -21,20 +19,23 @@ export default function GlobeViewer({ orbitData }) {
                 fullscreenButton: false,
                 infoBox: false,
                 selectionIndicator: false,
+                requestRenderMode: true,
+                maximumRenderTimeChange: Infinity,
+                terrainProvider: new Cesium.EllipsoidTerrainProvider(),
             });
-            // Dark theme for space
-            viewerRef.current.scene.globe.enableLighting = true;
-            viewerRef.current.scene.skyAtmosphere.hueShift = -0.5;
+
+            const viewer = viewerRef.current;
+
+            viewer.scene.globe.enableLighting = false;
+            viewer.scene.skyAtmosphere.show = false;
+            viewer.shadows = false;
+            viewer.resolutionScale = 0.7;
         }
 
         const viewer = viewerRef.current;
-
-        // Clear previous entities
         viewer.entities.removeAll();
 
         if (orbitData && orbitData.path1 && orbitData.path2) {
-
-            // Path 1
             viewer.entities.add({
                 name: 'Orbit 1',
                 polyline: {
@@ -48,7 +49,6 @@ export default function GlobeViewer({ orbitData }) {
                 },
             });
 
-            // Path 2
             viewer.entities.add({
                 name: 'Orbit 2',
                 polyline: {
@@ -62,7 +62,6 @@ export default function GlobeViewer({ orbitData }) {
                 },
             });
 
-            // Highlight closest approach point
             if (orbitData.closest_point) {
                 viewer.entities.add({
                     name: 'Closest Approach',
@@ -81,11 +80,10 @@ export default function GlobeViewer({ orbitData }) {
             }
 
             viewer.zoomTo(viewer.entities);
+            viewer.scene.requestRender();
         }
 
-        return () => {
-            // cleanup if needed
-        };
+        return () => { };
     }, [orbitData]);
 
     return <div ref={cesiumContainer} className="globe-container" />;
