@@ -25,7 +25,9 @@ export default function GlobeViewer({ orbitData }) {
                 // Performance optimizations
                 skyBox: false,
                 skyAtmosphere: false,
-                imageryProvider: false,
+                baseLayer: new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({
+                    url: 'https://a.tile.openstreetmap.org/'
+                })),
             });
 
             const viewer = viewerRef.current;
@@ -40,9 +42,6 @@ export default function GlobeViewer({ orbitData }) {
             viewer.shadows = false;
             viewer.resolutionScale = 0.5;
             viewer.clock.shouldAnimate = false;
-
-            // Single color globe material to avoid high-res texture loading
-            scene.globe.baseColor = Cesium.Color.fromCssColorString('#02040a');
         }
 
         const viewer = viewerRef.current;
