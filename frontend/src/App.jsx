@@ -19,6 +19,12 @@ function App() {
         setResults(null)
         setOrbitData({})
 
+        if (id1.trim() === id2.trim()) {
+            setLoading(false)
+            setError("Error: This is the exact same satellite! It cannot crash into itself unless it invents a time machine. 🕰️💥")
+            return
+        }
+
         try {
             const response = await axios.post(`${API_BASE_URL}/predict_collision`, {
                 norad_id_1: id1,
