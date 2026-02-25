@@ -139,12 +139,13 @@ body {
 
 .result-label {
   color: #a0aec0;
+  font-size: 16px;
 }
 
 .result-value {
-  font-weight: 600;
+  font-weight: 700;
   font-family: monospace;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .risk-low {
