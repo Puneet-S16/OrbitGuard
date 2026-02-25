@@ -25,8 +25,8 @@ export default function GlobeViewer({ orbitData }) {
                 // Performance optimizations
                 skyBox: false,
                 skyAtmosphere: false,
-                baseLayer: new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({
-                    url: 'https://a.tile.openstreetmap.org/'
+                baseLayer: new Cesium.ImageryLayer(new Cesium.ArcGisMapServerImageryProvider({
+                    url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
                 })),
             });
 
